@@ -1,4 +1,5 @@
-<?php get_header();PageBanner([
+<?php get_header();
+PageBanner([
     'title'    => 'Our Blog' ,
     'subtitle' => 'This is our Blogs'
 
