@@ -13662,11 +13662,11 @@ function () {
     value: function getResults() {
       var _this = this;
 
-      _jquery.default.when(_jquery.default.getJSON('http://localhost:3000/themedev/' + '/wp-json/wp/v2/posts?search=' + this.searchInput.val()), _jquery.default.getJSON('http://localhost:3000/themedev/' + '/wp-json/wp/v2/pages?search=' + this.searchInput.val())).then(function (posts, pages) {
+      _jquery.default.when(_jquery.default.getJSON(medoData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchInput.val()), _jquery.default.getJSON('http://localhost:3000/themedev/' + '/wp-json/wp/v2/pages?search=' + this.searchInput.val())).then(function (posts, pages) {
         var combinedResults = posts[0].concat(pages[0]);
 
         _this.searchResultsDiv.html("\n\t\t\t        <h2 class=\"search-overlay__section-title\">General Information</h2>\n\t\t\t        ".concat(combinedResults.length ? '<ul class="link-list min-list">' : '<p>No general information matches that search.</p>', "\n\t\t\t          ").concat(combinedResults.map(function (item) {
-          return "<li><a href=\"".concat(item.link, "\">").concat(item.title.rendered, "</a></li>");
+          return "<li><a href=\"".concat(item.link, "\">").concat(item.title.rendered, "</a>by ").concat(item.authorName, "</li>");
         }).join(''), "\n\t\t\t        ").concat(combinedResults.length ? '</ul>' : '', "\n\t\t\t      "));
 
         _this.isSpinnerVisible = false;

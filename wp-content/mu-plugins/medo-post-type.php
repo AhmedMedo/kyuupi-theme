@@ -4,6 +4,7 @@
 	function medo_post_type(){
 		//Event Post Type
 		$events_labels=[
+
 				'name' => __('Events'),
 				'add_new_item' =>'Add New Event',
 				'edit_item' =>'Edit Event',
@@ -17,6 +18,7 @@
 				];
 		$events_args = array(
 			'labels'             => $events_labels,
+			'show_in_rest'=>'true',
 	        'description'        => __( 'keep on with our new events.' ),
 			'public'             => true,
 			'menu_icon'			 =>'dashicons-calendar',
@@ -53,6 +55,7 @@
 			'labels'             => $programs_labels,
 	        'description'        => __( 'list all programs available.' ),
 			'public'             => true,
+			'show_in_rest'=>'true',
 			'menu_icon'			 =>'dashicons-awards',
 			'publicly_queryable' => true,
 			'show_ui'            => true,
@@ -85,6 +88,7 @@
 			'labels'             => $professors_labels,
 	        'description'        => __( 'list all professors available.' ),
 			'public'             => true,
+			'show_in_rest'=>'true',
 			'menu_icon'			 =>'dashicons-welcome-learn-more',
 			'publicly_queryable' => true,
 			'show_ui'            => true,
@@ -114,6 +118,7 @@
 			'labels'             => $campus_labels,
 	        'description'        => __( 'list all campuses available.' ),
 			'public'             => true,
+			'show_in_rest'=>'true',
 			'menu_icon'			 =>'dashicons-location',
 			'publicly_queryable' => true,
 			'show_ui'            => true,

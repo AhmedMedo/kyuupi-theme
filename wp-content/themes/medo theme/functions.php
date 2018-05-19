@@ -1,5 +1,7 @@
 <?php
 
+	/*Custom */
+	require get_theme_file_path('/inc/search-route.php');
 	/*
 		Page Banner function
 	*/
@@ -51,7 +53,7 @@
 		wp_enqueue_style('google-custom-font','//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
 		wp_enqueue_style('font-awsome','//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 		wp_enqueue_style('medo_main_styles',get_stylesheet_uri());
-		wp_localize_script('medo_js', 'medoData', array(
+		wp_localize_script('medo-javascript', 'medoData', array(
 		    'root_url' => get_site_url()
 		  ));
 
@@ -153,6 +155,29 @@
 		}
 
 		add_filter('acf/fields/google_map/api','MedoMapKey');
+
+
+
+
+		/*Rest API actions*/
+
+		function medo_custom_rest(){
+			register_rest_field('post','authorName',[
+				'get_callback'=> function (){
+					return get_the_author();
+				}
+			]);
+			register_rest_field('post','TiT',[
+				'get_callback'=> function (){
+					return get_the_title();
+				}
+			]);
+
+		}
+
+		add_action('rest_api_init','medo_custom_rest');
+
+
 
 
 
