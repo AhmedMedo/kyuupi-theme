@@ -13656,22 +13656,41 @@ function () {
       }
 
       this.previousValue = this.searchInput.val();
-    }
+    } // getResults(){
+    // 		 $.when(
+    // 		      $.getJSON(medoData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchInput.val()),
+    // 		      $.getJSON('http://localhost:3000/themedev/' + '/wp-json/wp/v2/pages?search=' + this.searchInput.val())
+    // 		      ).then((posts, pages) => {
+    // 		      var combinedResults = posts[0].concat(pages[0]);
+    // 		      this.searchResultsDiv.html(`
+    // 		        <h2 class="search-overlay__section-title">General Information</h2>
+    // 		        ${combinedResults.length ? '<ul class="link-list min-list">' : '<p>No general information matches that search.</p>'}
+    // 		          ${combinedResults.map(item => `<li><a href="${item.link}">${item.title.rendered}</a>by ${item.authorName}</li>`).join('')}
+    // 		        ${combinedResults.length ? '</ul>' : ''}
+    // 		      `);
+    // 		      this.isSpinnerVisible = false;
+    // 		    }, () => {
+    // 		      this.searchResultsDiv.html('<p>Unexpected error; please try again.</p>');
+    // 		    });
+    // 		}
+
   }, {
     key: "getResults",
     value: function getResults() {
       var _this = this;
 
-      _jquery.default.when(_jquery.default.getJSON(medoData.root_url + '/wp-json/wp/v2/posts?search=' + this.searchInput.val()), _jquery.default.getJSON('http://localhost:3000/themedev/' + '/wp-json/wp/v2/pages?search=' + this.searchInput.val())).then(function (posts, pages) {
-        var combinedResults = posts[0].concat(pages[0]);
-
-        _this.searchResultsDiv.html("\n\t\t\t        <h2 class=\"search-overlay__section-title\">General Information</h2>\n\t\t\t        ".concat(combinedResults.length ? '<ul class="link-list min-list">' : '<p>No general information matches that search.</p>', "\n\t\t\t          ").concat(combinedResults.map(function (item) {
-          return "<li><a href=\"".concat(item.link, "\">").concat(item.title.rendered, "</a>by ").concat(item.authorName, "</li>");
-        }).join(''), "\n\t\t\t        ").concat(combinedResults.length ? '</ul>' : '', "\n\t\t\t      "));
+      _jquery.default.getJSON(medoData.root_url + '/wp-json/medo/v1/search?term=' + this.searchInput.val(), function (results) {
+        _this.searchResultsDiv.html("\n        <div class=\"row\">\n          <div class=\"one-third\">\n            <h2 class=\"search-overlay__section-title\">General Information</h2>\n            ".concat(results.generalInfo.length ? '<ul class="link-list min-list">' : '<p>No general information matches that search.</p>', "\n              ").concat(results.generalInfo.map(function (item) {
+          return "<li><a href=\"".concat(item.permalink, "\">").concat(item.title, "</a> ").concat(item.postType == 'post' ? "by ".concat(item.authorName) : '', "</li>");
+        }).join(''), "\n            ").concat(results.generalInfo.length ? '</ul>' : '', "\n          </div>\n            <div class=\"one-third\">\n            <h2 class=\"search-overlay__section-title\">Programs</h2>\n            ").concat(results.programs.length ? '<ul class="link-list min-list">' : "<p>No programs match that search. <a href=\"".concat(universityData.root_url, "/programs\">View all programs</a></p>"), "\n              ").concat(results.programs.map(function (item) {
+          return "<li><a href=\"".concat(item.permalink, "\">").concat(item.title, "</a></li>");
+        }).join(''), "\n            ").concat(results.programs.length ? '</ul>' : '', "\n\n            <h2 class=\"search-overlay__section-title\">Professors</h2>\n            ").concat(results.professors.length ? '<ul class="professor-cards">' : "<p>No professors match that search.</p>", "\n              ").concat(results.professors.map(function (item) {
+          return "\n                <li class=\"professor-card__list-item\">\n                  <a class=\"professor-card\" href=\"".concat(item.permalink, "\">\n                    <img class=\"professor-card__image\" src=\"").concat(item.image, "\">\n                    <span class=\"professor-card__name\">").concat(item.title, "</span>\n                  </a>\n                </li>\n              ");
+        }).join(''), "\n            ").concat(results.professors.length ? '</ul>' : '', "\n\n          </div>\n          <div class=\"one-third\">\n            <h2 class=\"search-overlay__section-title\">Campuses</h2>\n            ").concat(results.campuses.length ? '<ul class="link-list min-list">' : "<p>No campuses match that search. <a href=\"".concat(universityData.root_url, "/campuses\">View all campuses</a></p>"), "\n              ").concat(results.campuses.map(function (item) {
+          return "<li><a href=\"".concat(item.permalink, "\">").concat(item.title, "</a></li>");
+        }).join(''), "\n            ").concat(results.campuses.length ? '</ul>' : '', "\n\n            <h2 class=\"search-overlay__section-title\">Events</h2>\n          </div>\n        </div>\n      "));
 
         _this.isSpinnerVisible = false;
-      }, function () {
-        _this.searchResultsDiv.html('<p>Unexpected error; please try again.</p>');
       });
     }
   }, {
