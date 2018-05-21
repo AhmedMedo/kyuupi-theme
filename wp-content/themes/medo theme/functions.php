@@ -210,7 +210,7 @@
 
 
 
-		// custmoize login
+		// custmoize login data
 
 		function header_url(){
 			return esc_url(site_url('/'));
