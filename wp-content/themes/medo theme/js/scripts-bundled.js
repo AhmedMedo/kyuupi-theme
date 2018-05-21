@@ -13699,6 +13699,7 @@ function () {
       this.searchOverlay.addClass("search-overlay--active");
       this.DisableScrollBody();
       this.isOpen = true;
+      return false;
     }
   }, {
     key: "closeOverlay",
