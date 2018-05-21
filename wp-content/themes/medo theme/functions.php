@@ -179,8 +179,62 @@
 
 
 
+		// Redirect Subscribers to home page
+
+		function redirect_subscribers(){
+			$current_user = wp_get_current_user();
+			if(count($current_user->roles) AND $current_user->roles[0] == 'subscriber' ){
+				wp_redirect(site_url('/'));
+				exit;
+
+			}
+		}
 
 
 
+
+		add_action('admin_init','redirect_subscribers');
+
+		function no_admin_bar(){
+			$current_user = wp_get_current_user();
+			if(count($current_user->roles) AND $current_user->roles[0] == 'subscriber' ){
+				show_admin_bar(false);
+
+			}
+		}
+
+
+
+
+		add_action('wp_loaded','no_admin_bar');
+
+
+
+		// custmoize login
+
+		function header_url(){
+			return esc_url(site_url('/'));
+		}
+
+
+		add_action('login_headerurl','header_url');
+
+
+		function login_css()
+		{
+			wp_enqueue_style('medo_main_styles',get_stylesheet_uri());
+			wp_enqueue_style('google-custom-font','//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
+
+
+		}
+
+	    add_action('login_enqueue_scripts','login_css');
+
+
+	    function login_title(){
+	    	return get_bloginfo('name');
+	    }
+
+	    add_filter('login_headertitle','login_title');
 
   ?>
